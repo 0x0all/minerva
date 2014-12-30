@@ -154,6 +154,13 @@ NArray NArray::Reshape(const Scale& dims) const {
   return NArray::ComputeOne({*this}, dims, new ReshapeOp());
 }
 
+NArray NArray::Concatenate(const NArray& n) const {
+  // TODO: tianjun
+  // Check dimension
+  // create op
+  return NArray::ComputeOne({*this, n}, dims, op);
+}
+
 NArray NArray::Trans() const {
   CHECK_EQ(Size().NumDims(), 2) << "eligible only for 2D";
   Scale newsize = {Size(1), Size(0)};

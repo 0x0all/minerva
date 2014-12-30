@@ -48,6 +48,10 @@ struct TransposeClosure {
 struct ReshapeClosure {
 };
 
+struct ConcatenationClosure {
+  //TODO: tianjun
+}
+
 struct ReductionClosure {
   ReductionType type;
   Scale dims_to_reduce;

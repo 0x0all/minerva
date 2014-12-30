@@ -68,6 +68,7 @@ class NArray {
   const Scale& Size() const { return CHECK_NOTNULL(data_node_)->data_.size; }
   int Size(int dim) const { return CHECK_NOTNULL(data_node_)->data_.size[dim]; }
   NArray Reshape(const Scale& dims) const;
+  NArray Concatenate(const NArray&) const; // TODO: tianjun
   NArray Trans() const;
   // Lazy reductions
   NArray Sum(int dim) const;

@@ -83,6 +83,13 @@ class ReshapeOp : public PhyComputeFnWithClosure<ReshapeClosure> {
   }
 };
 
+class ConcatenationOp : public PhyComputeFnWithClosure<ConcatenationOp> {
+ public:
+  std::string Name() const {
+    // TODO: tianjun
+  }
+};
+
 class ElewiseOp : public PhyComputeFnWithClosure<ElewiseClosure> {
  public:
   std::string Name() const {
