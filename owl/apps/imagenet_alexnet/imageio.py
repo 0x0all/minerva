@@ -19,7 +19,7 @@ class ImageNetDataProvider:
         #print mean_data[:,:,2]
         #print 'diff=', bp.diff
         self.mean_data = np.array(bp.data, dtype=np.float32).reshape([3, 256, 256])
-        
+
         self.train_db = train_db
         self.val_db = val_db
         self.test_db = test_db
@@ -37,9 +37,9 @@ class ImageNetDataProvider:
                 d.ParseFromString(value)
                 #print '#channels=', d.channels, 'height=', d.height, 'width=', d.width, 'label=', d.label
                 im = np.fromstring(d.data, dtype=np.uint8).reshape([3, 256, 256]) - self.mean_data
-                
+
                 [crop_h, crop_w] = np.random.randint(256 - cropped_size, size=2)
-                
+
                 im_cropped = im[:, crop_h:crop_h+cropped_size, crop_w:crop_w+cropped_size]
 
                 '''
@@ -48,7 +48,7 @@ class ImageNetDataProvider:
                 img.save('cropimg.jpg', format='JPEG')
                 exit(0)
                 '''
-                
+
                 samples[count, :] = im_cropped.reshape(cropped_size ** 2 * 3).astype(np.float32)
                 labels[count, d.label] = 1
                 count = count + 1
