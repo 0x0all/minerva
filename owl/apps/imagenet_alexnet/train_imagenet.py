@@ -26,7 +26,7 @@ def train_network(model, num_epochs = 100, minibatch_size=256,
             train_db='/home/minjie/data/imagenet/ilsvrc12_train_lmdb',
             val_db='/home/minjie/data/imagenet/ilsvrc12_val_lmdb',
             test_db='/home/minjie/data/imagenet/ilsvrc12_test_lmdb')
-    lazy_cycle = 1
+    lazy_cycle = 4
 
     for i in xrange(num_epochs):
         print "---------------------Epoch #", i
