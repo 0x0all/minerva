@@ -16,11 +16,8 @@ def print_training_accuracy(o, t, minibatch_size):
     print 'Training error: {}'.format((minibatch_size - correct) * 1.0 / minibatch_size)
     sys.stdout.flush()
 
-
 def train_network(model, num_epochs = 100, minibatch_size=256,
         dropout_rate = 0.5, eps_w = 0.01, eps_b = 0.01, mom = 0.9, wd = 0.0005):
-    gpu0 = owl.create_gpu_device(0)
-    owl.set_device(gpu0)
     num_weights = 8
     count = 0
     last = time.time()
@@ -29,6 +26,7 @@ def train_network(model, num_epochs = 100, minibatch_size=256,
             train_db='/home/minjie/data/imagenet/ilsvrc12_train_lmdb',
             val_db='/home/minjie/data/imagenet/ilsvrc12_val_lmdb',
             test_db='/home/minjie/data/imagenet/ilsvrc12_test_lmdb')
+    lazy_cycle = 1
 
     for i in xrange(num_epochs):
         print "---------------------Epoch #", i
@@ -42,15 +40,15 @@ def train_network(model, num_epochs = 100, minibatch_size=256,
             out.start_eval()
             model.update(weightsgrad, biasgrad, num_samples, mom, eps_w, wd)
 
-            if count % 4 == 0:
+            if count % lazy_cycle == 0:
                 print_training_accuracy(out, target, data.shape[-1])
-                print "time: %s" % (time.time() - last)
+                print "time: %s" % ((time.time() - last) / lazy_cycle)
                 last = time.time()
 
 if __name__ == '__main__':
     owl.initialize(sys.argv)
     cpu = owl.create_cpu_device()
-    owl.set_device(cpu)
+    owl.set_device(owl.create_gpu_device(0))
     model = AlexModel()
     model.init_random()
     train_network(model)
